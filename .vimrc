@@ -27,7 +27,7 @@
     "" Navigation
         Plugin 'kien/ctrlp.vim'
         Plugin 'scrooloose/nerdtree'
-        Plugin 'easymotion/vim-easymotion'
+        "Plugin 'easymotion/vim-easymotion'
 
     "" Text editing
         Plugin 'terryma/vim-multiple-cursors'
@@ -36,6 +36,9 @@
 
     "" Compiling/Syntax
         Plugin 'vim-syntastic/syntastic'
+
+    "" Searching
+        Plugin 'mileszs/ack.vim'
 
     call vundle#end()
     filetype plugin indent on
@@ -110,8 +113,8 @@
     noremap <leader>q :bp<CR>
     noremap <leader>w :bn<CR>
 
-    " <Leader><Leader<Leader> -> last buffer
-    noremap <Leader><Leader><Leader> <C-^>
+    " <Leader<Leader> -> last buffer
+    noremap <Leader><Leader> <C-^>
 
     " <Leader>m -> cycle windows
     noremap <Leader>m <C-W>w
@@ -122,21 +125,18 @@
     " Map cll to type console.log in insert mode
     imap cll console.log();<Esc><Left>i
 
-    "Maps NERDTreeToggle to control N
-    map <C-n> :NERDTreeToggle<CR>
-
     " Multiple cursor mapping
     let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_next_key='<C-m>'
     let g:multi_cursor_prev_key='<C-p>'
-    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_skip_key='<C-n>'
     let g:multi_cursor_quit_key='<Esc>'
 
     " EASYMOTION <Leader>s to search
-    map  <Leader>s <Plug>(easymotion-sn)
-    omap <Leader>s <Plug>(easymotion-tn)
+    "map  <Leader>s <Plug>(easymotion-sn)
+    "omap <Leader>s <Plug>(easymotion-tn)
 
-    " Syntastic Check
+    "" Syntastic Check
     map <Leader>d :SyntasticCheck<CR>
 
 "" END MAPPING
@@ -168,7 +168,11 @@
     " Sets to passive
     let g:syntastic_mode_map = {
             \ "mode": "passive",
-            \ "active_filetypes": ["cpp"],
+            \ "active_filetypes": [],
             \ "passive_filetypes": [] }
 
 "" END SYNTASTIC
+
+"" ACK
+    cnoreabbrev Ack Ack!
+"" END ACK
