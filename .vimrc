@@ -89,6 +89,9 @@
     "show incomplete commands
     set showcmd
 
+    "Fix backspace in insert mode
+    set backspace=2
+
 "" END VIM
 
 
@@ -123,7 +126,7 @@
     noremap <Leader>f :tabn<CR>
 
     " Map cll to type console.log in insert mode
-    imap cll console.log();<Esc><Left>i
+    "imap cll console.log();<Esc><Left>i
 
     " Multiple cursor mapping
     let g:multi_cursor_use_default_mapping=0
