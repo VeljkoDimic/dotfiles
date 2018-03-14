@@ -8,34 +8,29 @@
     Plugin 'VundleVim/Vundle.vim'
 
     "" Languages
-        Plugin 'pangloss/vim-javascript'
-        Plugin 'plasticboy/vim-markdown'
-        Plugin 'tpope/vim-rails'
-        Plugin 'derekwyatt/vim-scala'
+        "Plugin 'pangloss/vim-javascript'
+        "Plugin 'plasticboy/vim-markdown'
+        "Plugin 'tpope/vim-rails'
+        "Plugin 'derekwyatt/vim-scala'
 
     "" Visual
         Plugin 'dracula/vim'
         Plugin 'vim-airline/vim-airline'
-        Plugin 'vim-airline/vim-airline-themes'
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
         Plugin 'tpope/vim-fugitive'
         Plugin 'airblade/vim-gitgutter'
-        Plugin 'Xuyuanp/nerdtree-git-plugin'
+        "Plugin 'Xuyuanp/nerdtree-git-plugin'
 
     "" Navigation
-        Plugin 'kien/ctrlp.vim'
-        Plugin 'scrooloose/nerdtree'
-        "Plugin 'easymotion/vim-easymotion'
+        "Plugin 'kien/ctrlp.vim'    " Can use :b <C-D> which is mapped to <L>b
+        "Plugin 'scrooloose/nerdtree'   " Can use netrw instead
 
     "" Text editing
-        Plugin 'terryma/vim-multiple-cursors'
+        "Plugin 'terryma/vim-multiple-cursors'  " Use gn instead
         Plugin 'tpope/vim-surround'
         Plugin 'scrooloose/nerdcommenter'
-
-    "" Compiling/Syntax
-        Plugin 'vim-syntastic/syntastic'
 
     "" Searching
         Plugin 'mileszs/ack.vim'
@@ -125,56 +120,17 @@
     " <Leader>f -> next tab
     noremap <Leader>f :tabn<CR>
 
-    " Map cll to type console.log in insert mode
-    "imap cll console.log();<Esc><Left>i
+    " <Leader>b -> :b <C-D>
+    noremap <Leader>b :b <C-D>
 
     " Multiple cursor mapping
-    let g:multi_cursor_use_default_mapping=0
-    let g:multi_cursor_next_key='<C-m>'
-    let g:multi_cursor_prev_key='<C-p>'
-    let g:multi_cursor_skip_key='<C-n>'
-    let g:multi_cursor_quit_key='<Esc>'
-
-    " EASYMOTION <Leader>s to search
-    "map  <Leader>s <Plug>(easymotion-sn)
-    "omap <Leader>s <Plug>(easymotion-tn)
-
-    "" Syntastic Check
-    map <Leader>d :SyntasticCheck<CR>
+    "let g:multi_cursor_use_default_mapping=0
+    "let g:multi_cursor_next_key='<C-m>'
+    "let g:multi_cursor_prev_key='<C-p>'
+    "let g:multi_cursor_skip_key='<C-n>'
+    "let g:multi_cursor_quit_key='<Esc>'
 
 "" END MAPPING
-
-
-""  NERDTREE
-
-    "Opens NERDTree if nothing specified in vim
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-""  END NERDTREE
-
-"" SYNTASTIC
-
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-
-    "let g:syntastic_cpp_checkers = ['gcc']
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-
-    " Sets to passive
-    let g:syntastic_mode_map = {
-            \ "mode": "passive",
-            \ "active_filetypes": [],
-            \ "passive_filetypes": [] }
-
-"" END SYNTASTIC
 
 "" ACK
     cnoreabbrev Ack Ack!
