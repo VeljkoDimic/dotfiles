@@ -64,6 +64,12 @@
     set visualbell
     set t_vb=
 
+    " Recursively search subdirectories
+    set path+=**
+
+    " Display all matches on tab complete
+    set wildmenu
+
     " show term you are searching for and ignore case when all lower
     set incsearch
     set ignorecase
@@ -86,6 +92,9 @@
 
     "Fix backspace in insert mode
     set backspace=2
+
+    "Remove timeout in non-normal mode for escape
+    set timeoutlen=1000 ttimeoutlen=0
 
 "" END VIM
 
