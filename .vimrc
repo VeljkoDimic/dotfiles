@@ -96,6 +96,9 @@
     "Remove timeout in non-normal mode for escape
     set timeoutlen=1000 ttimeoutlen=0
 
+    "Search up dir for tags until root
+    set tags+=tags;/
+
 "" END VIM
 
 
