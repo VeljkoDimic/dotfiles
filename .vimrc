@@ -132,3 +132,64 @@
     noremap <Leader>b :b <C-D>
 
 "" END MAPPING
+
+"" STATUSLINE
+    let currentmode={
+        \ 'n'  : 'Normal ',
+        \ 'no' : 'N·Operator Pending ',
+        \ 'v'  : 'Visual ',
+        \ 'V'  : 'V·Line ',
+        \ '' : 'V·Block ',
+        \ 's'  : 'Select ',
+        \ 'S'  : 'S·Line ',
+        \ '' : 'S·Block ',
+        \ 'i'  : 'Insert ',
+        \ 'R'  : 'Replace ',
+        \ 'Rv' : 'V·Replace ',
+        \ 'c'  : 'Command ',
+        \ 'cv' : 'Vim Ex ',
+        \ 'ce' : 'Ex ',
+        \ 'r'  : 'Prompt ',
+        \ 'rm' : 'More ',
+        \ 'r?' : 'Confirm ',
+        \ '!'  : 'Shell ',
+        \ 't'  : 'Terminal '
+        \}
+
+    function! GitInfo()
+        let git = fugitive#head()
+        if git != ''
+            return 'ᚠ '.fugitive#head()
+        else
+            return ''
+    endfunction
+
+    " Status line colors
+    function! InsertStatuslineColor(mode)
+        if a:mode == 'i'
+            hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=84 guibg=#50fa7b
+        elseif a:mode == 'r'
+            hi StatusLine term=reverse ctermfg=15 guifg=#f8f8f2 ctermbg=160 guibg=#ff5555
+        else
+            hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+        endif
+    endfunction
+    au InsertEnter * call InsertStatuslineColor(v:insertmode)
+    au InsertChange * call InsertStatuslineColor(v:insertmode)
+    au InsertLeave * hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+
+    hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+
+    set statusline=
+    set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+    set statusline+=%1*\ [%n]                                " buffernr
+    set statusline+=%1*\ %{GitInfo()}                        " Git Branch name
+    set statusline+=%1*\ %<%F\                               " File+path
+    set statusline+=%1*%(\ [%R%M%H]%)                        " Readonly, modified, preview flags
+    set statusline+=%*
+    set statusline+=%1*\ %=                                  " Space
+    set statusline+=%1*\ %y\                                 " FileType
+    set statusline+=%0*\ ☰\ %l/%L\ %v                        " Rownumber/total (%)
+    set statusline+=%0*\ %P\                                 " Percent of file viewed
+
+"" END STATUSLINE
