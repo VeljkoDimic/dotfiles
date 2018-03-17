@@ -8,27 +8,19 @@
     Plugin 'VundleVim/Vundle.vim'
 
     "" Languages
-        "Plugin 'pangloss/vim-javascript'
-        "Plugin 'plasticboy/vim-markdown'
-        "Plugin 'tpope/vim-rails'
-        "Plugin 'derekwyatt/vim-scala'
 
     "" Visual
         Plugin 'dracula/vim'
-        Plugin 'vim-airline/vim-airline'
+        "Plugin 'vim-airline/vim-airline'
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
         Plugin 'tpope/vim-fugitive'
         Plugin 'airblade/vim-gitgutter'
-        "Plugin 'Xuyuanp/nerdtree-git-plugin'
 
     "" Navigation
-        "Plugin 'kien/ctrlp.vim'    " Can use :b <C-D> which is mapped to <L>b
-        "Plugin 'scrooloose/nerdtree'   " Can use netrw instead
 
     "" Text editing
-        "Plugin 'terryma/vim-multiple-cursors'  " Use gn instead
         Plugin 'tpope/vim-surround'
         Plugin 'scrooloose/nerdcommenter'
 
@@ -74,6 +66,10 @@
     set incsearch
     set ignorecase
     set smartcase
+
+    " Smart indenting
+    set autoindent
+    set smartindent
 
     "Syntax highlighting
     syntax on
@@ -135,15 +131,4 @@
     " <Leader>b -> :b <C-D>
     noremap <Leader>b :b <C-D>
 
-    " Multiple cursor mapping
-    "let g:multi_cursor_use_default_mapping=0
-    "let g:multi_cursor_next_key='<C-m>'
-    "let g:multi_cursor_prev_key='<C-p>'
-    "let g:multi_cursor_skip_key='<C-n>'
-    "let g:multi_cursor_quit_key='<Esc>'
-
 "" END MAPPING
-
-"" ACK
-    cnoreabbrev Ack Ack!
-"" END ACK
