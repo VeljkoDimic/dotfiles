@@ -41,16 +41,18 @@
     " Always display status bar
     set laststatus=2
 
-    " 2 spaces for ruby, erb, and html
+    " 2 spaces for ruby, erb, html, and js
     autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType eruby setlocal shiftwidth=2 tabstop=2 expandtab
+    autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
 
     "4 spaces on tab
-    filetype plugin indent on
-    set tabstop=4
+    set tabstop=8
+    set softtabstop=4
     set shiftwidth=4
     set expandtab
+    filetype plugin indent on
 
     " Disable visualbell
     set visualbell
