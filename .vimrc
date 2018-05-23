@@ -141,11 +141,14 @@
     " Toggles highlighting of extra whitespaces at the end of lines
     noremap <Leader>i :call WhitespaceToggle()<CR>
 
+    " Just use :TrimWhitespace to trim all whitespce at the end of all lines
+    command! TrimWhitespace call TrimWhitespace()
+
 "" END MAPPING
 
 "" FUNCTIONS
 
-    " Dependent on vim fugitive
+    " Dependent on vim fugitive. Used in statusline
     function! GitInfo()
         let git = fugitive#head()
         if git != ''
@@ -156,17 +159,32 @@
 
 
     " Highlights whitespace at the end of lines
+
+    " Colors and settings for whitespace
     highligh DisableExtraWhitespace ctermbg=NONE guibg=NONE
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    let g:whitespace_highlight_is_on = 0
+    highlight ExtraWhitespace ctermbg=208 guibg=#ffb86c
+    set listchars=trail:· " Highlights trailing spaces with · characters
+    set nolist " Default off
+    match DisableExtraWhitespace /\s\+$/ " Defualt off
+    let g:whitespace_highlight_is_on = 0 " Default off
+
     function! WhitespaceToggle()
         if g:whitespace_highlight_is_on
             match DisableExtraWhitespace /\s\+$/
+            execute 'set nolist'
             let g:whitespace_highlight_is_on = 0
         else
             match ExtraWhitespace /\s\+$/
+            execute 'set list'
             let g:whitespace_highlight_is_on = 1
         endif
+    endfunction
+
+    " Trims whitespace at the end of lines
+    function! TrimWhitespace()
+        let l:save = winsaveview()
+        %s/\s\+$//e
+        call winrestview(l:save)
     endfunction
 "" END FUNCTIONS
 
