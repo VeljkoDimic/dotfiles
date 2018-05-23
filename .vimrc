@@ -8,6 +8,7 @@
     Plugin 'VundleVim/Vundle.vim'
 
     "" Languages
+        Plugin 'lervag/vimtex'
 
     "" Visual
         Plugin 'dracula/vim'
@@ -97,6 +98,10 @@
     "Search up dir for tags until root
     set tags+=tags;/
 
+    "Conceal level set to zero
+    set conceallevel=0
+    let g:indentLine_setConceal = 0
+
 "" END VIM
 
 
@@ -133,7 +138,37 @@
     " <Leader>b -> :b <C-D>
     noremap <Leader>b :b <C-D>
 
+    " Toggles highlighting of extra whitespaces at the end of lines
+    noremap <Leader>i :call WhitespaceToggle()<CR>
+
 "" END MAPPING
+
+"" FUNCTIONS
+
+    " Dependent on vim fugitive
+    function! GitInfo()
+        let git = fugitive#head()
+        if git != ''
+            return 'ᚠ '.fugitive#head()
+        else
+            return ''
+    endfunction
+
+
+    " Highlights whitespace at the end of lines
+    highligh DisableExtraWhitespace ctermbg=NONE guibg=NONE
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    let g:whitespace_highlight_is_on = 0
+    function! WhitespaceToggle()
+        if g:whitespace_highlight_is_on
+            match DisableExtraWhitespace /\s\+$/
+            let g:whitespace_highlight_is_on = 0
+        else
+            match ExtraWhitespace /\s\+$/
+            let g:whitespace_highlight_is_on = 1
+        endif
+    endfunction
+"" END FUNCTIONS
 
 "" STATUSLINE
     let currentmode={
@@ -157,15 +192,6 @@
         \ '!'  : 'Shell ',
         \ 't'  : 'Terminal '
         \}
-
-    function! GitInfo()
-        let git = fugitive#head()
-        if git != ''
-            return 'ᚠ '.fugitive#head()
-        else
-            return ''
-    endfunction
-
     " Status line colors
     function! InsertStatuslineColor(mode)
         if a:mode == 'i'
