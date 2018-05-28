@@ -8,7 +8,7 @@
     Plugin 'VundleVim/Vundle.vim'
 
     "" Languages
-        Plugin 'lervag/vimtex'
+        Plugin 'sheerun/vim-polyglot'
 
     "" Visual
         Plugin 'dracula/vim'
@@ -27,6 +27,9 @@
 
     "" Searching
         Plugin 'mileszs/ack.vim'
+
+    "" Dispatch
+        Plugin 'tpope/vim-dispatch'
 
     call vundle#end()
     filetype plugin indent on
@@ -145,6 +148,16 @@
     command! TrimWhitespace call TrimWhitespace()
 
 "" END MAPPING
+
+
+"" MAKE
+    " Note: :cn for next, :cp for prev, :cl for list, :cw for quickfix window
+
+    autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
+    autocmd FileType tex setlocal makeprg=pdflatex\ %
+
+"" END MAKE
+
 
 "" FUNCTIONS
 
