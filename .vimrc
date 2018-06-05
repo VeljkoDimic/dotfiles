@@ -10,9 +10,11 @@
     "" Languages
         Plugin 'sheerun/vim-polyglot'
 
+    "" Linting
+        Plugin 'w0rp/ale'
+
     "" Visual
         Plugin 'dracula/vim'
-        "Plugin 'vim-airline/vim-airline'
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
@@ -80,8 +82,7 @@
     "Syntax highlighting
     syntax on
 
-    "Line number
-    set number
+    " Line number set in function definition
 
     "filetype plugin on
     set omnifunc=syntaxcomplete#Complete
@@ -141,11 +142,19 @@
     " <Leader>b -> :b <C-D>
     noremap <Leader>b :b <C-D>
 
+    " <Leader>l -> calls Make
+    " <Leader>l -> calls Make!
+    noremap <Leader>l :Make<CR>
+    noremap <Leader>L :Make!<CR>
+
     " Toggles highlighting of extra whitespaces at the end of lines
     noremap <Leader>i :call WhitespaceToggle()<CR>
 
     " Just use :TrimWhitespace to trim all whitespce at the end of all lines
     command! TrimWhitespace call TrimWhitespace()
+
+    " Toggle number settings
+    noremap <Leader>r :call CycleNumberSettings()<CR>
 
 "" END MAPPING
 
@@ -157,6 +166,12 @@
     autocmd FileType tex setlocal makeprg=pdflatex\ %
 
 "" END MAKE
+
+"" LINTING
+    " Don't run linter when typing
+    let g:ale_lint_on_text_changed = 'never'
+
+"" END LINTING
 
 
 "" FUNCTIONS
@@ -199,6 +214,45 @@
         %s/\s\+$//e
         call winrestview(l:save)
     endfunction
+
+    " Functions for setting line numbers
+    " The following are the mappings for number settings:
+    " 0: no numbers, no relative numbers
+    " 1: numbers, no relative numbers
+    " 2: no numbers, relative numbers
+    " 3: numbers, relative numbers
+
+    " Default set to 2
+    let g:number_setting = 2
+    " Currently disable option 3
+    let g:number_settings_count = 3
+
+    " Set line settings
+    function! SetNumber(setting)
+        if a:setting == 0
+            set nonumber
+            set norelativenumber
+        elseif a:setting == 1
+            set number
+            set norelativenumber
+        elseif a:setting == 2
+            set nonumber
+            set relativenumber
+        elseif a:setting == 3
+            set number
+            set relativenumber
+        endif
+    endfunction
+
+    " Increment number settings and set appropriate number scheme
+    function! CycleNumberSettings()
+        let g:number_setting = g:number_setting + 1
+        let g:number_setting = g:number_setting % g:number_settings_count
+        call SetNumber(g:number_setting)
+    endfunction
+
+    " call default value
+    call SetNumber(g:number_setting)
 "" END FUNCTIONS
 
 "" STATUSLINE
