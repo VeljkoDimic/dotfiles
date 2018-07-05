@@ -106,6 +106,18 @@
     set conceallevel=0
     let g:indentLine_setConceal = 0
 
+    " 'cw' type commands put $ at end, rather than just delete
+    set cpoptions=ces$
+
+    " Don't update display while executing macros
+    set lazyredraw
+
+    " Limit on syntax highlighting of long lines
+    set synmaxcol=2048
+
+    " Automatically insert header guard for .h files
+    autocmd BufNewFile *.{h,hpp} call <SID>InsertHeaderGuard()
+
 "" END VIM
 
 
@@ -142,6 +154,7 @@
     " <Leader>b -> :b <C-D>
     noremap <Leader>b :b <C-D>
 
+    " Dispatch mapping
     " <Leader>l -> calls Make
     " <Leader>l -> calls Make!
     noremap <Leader>l :Make<CR>
@@ -155,6 +168,10 @@
 
     " Toggle number settings
     noremap <Leader>r :call CycleNumberSettings()<CR>
+
+    " Copy the entire buffer. Useful for coding challenges
+    noremap <Leader>y gg"+yG<C-o><C-o>
+    noremap <Leader>Y ggyG<C-o><C-o>
 
 "" END MAPPING
 
@@ -253,6 +270,18 @@
 
     " call default value
     call SetNumber(g:number_setting)
+
+
+    " Insert header guards for .h/.hpp files
+    function! s:InsertHeaderGuard()
+        let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+        execute "normal! i#ifndef " . gatename
+        execute "normal! o#define " . gatename . " "
+        normal! o
+        execute "normal! Go#endif /* " . gatename . " */"
+        normal! k
+    endfunction
+
 "" END FUNCTIONS
 
 "" STATUSLINE
