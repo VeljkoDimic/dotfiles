@@ -118,6 +118,16 @@
     " Automatically insert header guard for .h files
     autocmd BufNewFile *.{h,hpp} call <SID>InsertHeaderGuard()
 
+    " Save swapfiles, backups, and undofile in .vim
+    set swapfile
+    set directory=~/.vim/swapfiles//,.
+    set undodir=~/.vim/undofiles//,.
+    set undofile
+    " Backup disabled for now
+    set nobackup
+    "set backup
+    "set backupdir=~/.vim/backups//,.
+
 "" END VIM
 
 
@@ -173,6 +183,13 @@
     noremap <Leader>y gg"+yG<C-o><C-o>
     noremap <Leader>Y ggyG<C-o><C-o>
 
+    " Toggle between source and header files
+    noremap <Leader>s :call SwitchSourceHeader()<CR>
+
+    " Autocomplete to act more like vim and less like emacs
+    imap <C-J> <C-N>
+    imap <C-K> <C-P>
+
 "" END MAPPING
 
 
@@ -187,6 +204,9 @@
 "" LINTING
     " Don't run linter when typing
     let g:ale_lint_on_text_changed = 'never'
+
+    " Off by default
+    autocmd VimEnter * ALEDisable
 
 "" END LINTING
 
@@ -276,10 +296,19 @@
     function! s:InsertHeaderGuard()
         let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
         execute "normal! i#ifndef " . gatename
-        execute "normal! o#define " . gatename . " "
+        execute "normal! o#define " . gatename
         normal! o
         execute "normal! Go#endif /* " . gatename . " */"
         normal! k
+    endfunction
+
+    " Toggle between C++ header and source files
+    function! SwitchSourceHeader()
+        if (expand("%:e") == "cpp" || expand("%:e") == "cc")
+            find %:t:r.h
+        else
+            find %:t:r.cpp
+        endif
     endfunction
 
 "" END FUNCTIONS
