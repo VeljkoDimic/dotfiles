@@ -142,53 +142,53 @@
     "map <Right> :echo("Use l")<CR>
 
     " resize horzontal split window
-    nmap <Left> :vertical resize -5<cr>
-    nmap <Right> :vertical resize +5<cr>
+    nnoremap <Left> :vertical resize -5<cr>
+    nnoremap <Right> :vertical resize +5<cr>
     " resize horizontal split window
-    nmap <Up> :resize -5<cr>
-    nmap <Down> :resize +5<cr>
+    nnoremap <Up> :resize -5<cr>
+    nnoremap <Down> :resize +5<cr>
 
     " <Leader>q -> prev buffer, <Leader>w -> next buffer
-    noremap <leader>q :bp<CR>
-    noremap <leader>w :bn<CR>
+    nnoremap <leader>q :bp<CR>
+    nnoremap <leader>w :bn<CR>
 
     " <Leader<Leader> -> last buffer
-    noremap <Leader><Leader> <C-^>
+    nnoremap <Leader><Leader> <C-^>
 
     " <Leader>m -> cycle windows
-    noremap <Leader>m <C-W>w
-
-    " <Leader>f -> next tab
-    noremap <Leader>f :tabn<CR>
+    nnoremap <Leader>m <C-W>w
 
     " <Leader>b -> :b <C-D>
-    noremap <Leader>b :b <C-D>
+    nnoremap <Leader>b :b <C-D>
 
     " Dispatch mapping
     " <Leader>l -> calls Make
     " <Leader>l -> calls Make!
-    noremap <Leader>l :Make<CR>
-    noremap <Leader>L :Make!<CR>
+    nnoremap <Leader>l :Make<CR>
+    nnoremap <Leader>L :Make!<CR>
 
     " Toggles highlighting of extra whitespaces at the end of lines
-    noremap <Leader>i :call WhitespaceToggle()<CR>
+    nnoremap <Leader>i :call WhitespaceToggle()<CR>
 
     " Just use :TrimWhitespace to trim all whitespce at the end of all lines
     command! TrimWhitespace call TrimWhitespace()
 
     " Toggle number settings
-    noremap <Leader>r :call CycleNumberSettings()<CR>
+    nnoremap <Leader>r :call CycleNumberSettings()<CR>
 
     " Copy the entire buffer. Useful for coding challenges
-    noremap <Leader>y gg"+yG<C-o><C-o>
-    noremap <Leader>Y ggyG<C-o><C-o>
+    nnoremap <Leader>y gg"+yG<C-o><C-o>
+    nnoremap <Leader>Y ggyG<C-o><C-o>
 
     " Toggle between source and header files
-    noremap <Leader>s :call SwitchSourceHeader()<CR>
+    nnoremap <Leader>s :call SwitchSourceHeader()<CR>
 
     " Autocomplete to act more like vim and less like emacs
-    imap <C-J> <C-N>
-    imap <C-K> <C-P>
+    inoremap <C-J> <C-N>
+    inoremap <C-K> <C-P>
+
+    iabbrev cout std::cout <<
+    iabbrev endl std::endl;
 
 "" END MAPPING
 
@@ -196,7 +196,8 @@
 "" MAKE
     " Note: :cn for next, :cp for prev, :cl for list, :cw for quickfix window
 
-    autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
+    "autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
+    autocmd FileType cpp setlocal makeprg=g++\ --std=c++14\ %
     autocmd FileType tex setlocal makeprg=pdflatex\ %
 
 "" END MAKE
