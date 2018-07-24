@@ -53,7 +53,7 @@
     autocmd FileType eruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
 
-    "4 spaces on tab
+    " 4 spaces on tab
     set tabstop=8
     set softtabstop=4
     set shiftwidth=4
@@ -79,30 +79,28 @@
     set autoindent
     set smartindent
 
-    "Syntax highlighting
+    " Syntax highlighting
     syntax on
 
-    " Line number set in function definition
-
-    "filetype plugin on
+    " filetype plugin on
     set omnifunc=syntaxcomplete#Complete
 
-    "reload files changed outside of vim
+    " reload files changed outside of vim
     set autoread
 
-    "show incomplete commands
+    " show incomplete commands
     set showcmd
 
-    "Fix backspace in insert mode
+    " Fix backspace in insert mode
     set backspace=2
 
-    "Remove timeout in non-normal mode for escape
+    " Remove timeout in non-normal mode for escape
     set timeoutlen=1000 ttimeoutlen=0
 
-    "Search up dir for tags until root
+    " Search up dir for tags until root
     set tags+=tags;/
 
-    "Conceal level set to zero
+    " Conceal level set to zero
     set conceallevel=0
     let g:indentLine_setConceal = 0
 
@@ -128,6 +126,11 @@
     "set backup
     "set backupdir=~/.vim/backups//,.
 
+    " On scope declarations in C, use 2 spaces before and after
+    " class {
+    "   public:
+    "     a = a + 1;
+    set cinoptions=g2h2
 "" END VIM
 
 
@@ -183,14 +186,23 @@
     " Toggle between source and header files
     nnoremap <Leader>s :call SwitchSourceHeader()<CR>
 
+    " Toggle between showing column at 80 or not
+    nnoremap <Leader>v :call ToggleColorColumn()<CR>
+
     " Autocomplete to act more like vim and less like emacs
     inoremap <C-J> <C-N>
     inoremap <C-K> <C-P>
 
+"" END MAPPING
+
+
+"" ABBREVIATIONS
+
+    " cout and endl with std
     iabbrev cout std::cout <<
     iabbrev endl std::endl;
 
-"" END MAPPING
+"" END ABBREVIATIONS
 
 
 "" MAKE
@@ -199,6 +211,7 @@
     "autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
     autocmd FileType cpp setlocal makeprg=g++\ --std=c++14\ %
     autocmd FileType tex setlocal makeprg=pdflatex\ %
+    autocmd FileType python setlocal makeprg=python\ %
 
 "" END MAKE
 
@@ -227,7 +240,7 @@
     " Highlights whitespace at the end of lines
 
     " Colors and settings for whitespace
-    highligh DisableExtraWhitespace ctermbg=NONE guibg=NONE
+    highlight DisableExtraWhitespace ctermbg=NONE guibg=NONE
     highlight ExtraWhitespace ctermbg=208 guibg=#ffb86c
     set listchars=trail:· " Highlights trailing spaces with · characters
     set nolist " Default off
@@ -253,45 +266,24 @@
         call winrestview(l:save)
     endfunction
 
-    " Functions for setting line numbers
-    " The following are the mappings for number settings:
-    " 0: no numbers, no relative numbers
-    " 1: numbers, no relative numbers
-    " 2: no numbers, relative numbers
-    " 3: numbers, relative numbers
-
-    " Default set to 2
-    let g:number_setting = 2
-    " Currently disable option 3
-    let g:number_settings_count = 3
-
-    " Set line settings
-    function! SetNumber(setting)
-        if a:setting == 0
-            set nonumber
-            set norelativenumber
-        elseif a:setting == 1
+    " Toggle through number settings and set appropriate number scheme
+    function! CycleNumberSettings()
+        if (&number == 0 && &relativenumber == 0)
             set number
-            set norelativenumber
-        elseif a:setting == 2
+        elseif (&number == 1 && &relativenumber == 0)
             set nonumber
             set relativenumber
-        elseif a:setting == 3
+        elseif (&number == 0 && &relativenumber == 1)
             set number
-            set relativenumber
+        else
+            set nonumber
+            set norelativenumber
         endif
     endfunction
 
-    " Increment number settings and set appropriate number scheme
-    function! CycleNumberSettings()
-        let g:number_setting = g:number_setting + 1
-        let g:number_setting = g:number_setting % g:number_settings_count
-        call SetNumber(g:number_setting)
-    endfunction
-
-    " call default value
-    call SetNumber(g:number_setting)
-
+    " default values
+    set nonumber
+    set relativenumber
 
     " Insert header guards for .h/.hpp files
     function! s:InsertHeaderGuard()
@@ -308,10 +300,18 @@
         if (expand("%:e") == "cpp" || expand("%:e") == "cc")
             find %:t:r.h
         else
-            find %:t:r.cpp
+            find %:t:r.cc
         endif
     endfunction
 
+    " Toggle showing column color or not
+    function! ToggleColorColumn()
+        if (&colorcolumn == 80)
+            set colorcolumn=
+        else
+            set colorcolumn=80
+        endif
+    endfunction
 "" END FUNCTIONS
 
 "" STATUSLINE
