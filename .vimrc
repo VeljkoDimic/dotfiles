@@ -11,7 +11,7 @@
         Plugin 'sheerun/vim-polyglot'
 
     "" Linting
-        Plugin 'w0rp/ale'
+        "Plugin 'w0rp/ale'
 
     "" Visual
         Plugin 'dracula/vim'
@@ -82,7 +82,6 @@
     " Syntax highlighting
     syntax on
 
-    " filetype plugin on
     set omnifunc=syntaxcomplete#Complete
 
     " reload files changed outside of vim
@@ -193,6 +192,9 @@
     inoremap <C-J> <C-N>
     inoremap <C-K> <C-P>
 
+    " More sensible Y in normal mode to act more like C and D
+    nnoremap Y y$
+
 "" END MAPPING
 
 
@@ -217,10 +219,10 @@
 
 "" LINTING
     " Don't run linter when typing
-    let g:ale_lint_on_text_changed = 'never'
+    "let g:ale_lint_on_text_changed = 'never'
 
     " Off by default
-    autocmd VimEnter * ALEDisable
+    "autocmd VimEnter * ALEDisable
 
 "" END LINTING
 
