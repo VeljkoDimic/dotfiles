@@ -15,6 +15,7 @@
 
     "" Visual
         Plugin 'dracula/vim'
+        Plugin 'arcticicestudio/nord-vim'
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
@@ -42,10 +43,13 @@
 
     " Theme
     set background=dark
-    color dracula
+    color nord
 
     " Always display status bar
     set laststatus=2
+
+    " Scroll before top and bottom of buffer
+    set scrolloff=1
 
     " 2 spaces for ruby, erb, html, and js
     autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
@@ -339,20 +343,31 @@
         \ 't'  : 'Terminal '
         \}
     " Status line colors
-    function! InsertStatuslineColor(mode)
-        if a:mode == 'i'
-            hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=84 guibg=#50fa7b
-        elseif a:mode == 'r'
-            hi StatusLine term=reverse ctermfg=15 guifg=#f8f8f2 ctermbg=160 guibg=#ff5555
-        else
-            hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
-        endif
-    endfunction
-    au InsertEnter * call InsertStatuslineColor(v:insertmode)
-    au InsertChange * call InsertStatuslineColor(v:insertmode)
-    au InsertLeave * hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+    "function! InsertStatuslineColor(mode)
+        "if a:mode == 'i'
+            "" Dracula
+            ""hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=84 guibg=#50fa7b
+            "" Nord
+            "hi StatusLine term=reverse ctermfg=0 guifg=#3b4252 ctermbg=15 guibg=#eceff4
+        "elseif a:mode == 'r'
+            ""hi StatusLine term=reverse ctermfg=15 guifg=#f8f8f2 ctermbg=160 guibg=#ff5555
+            "hi StatusLine term=reverse ctermfg=15 guifg=#f8f8f2 ctermbg=160 guibg=#ff5555
+        "else
+            ""hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+            "hi StatusLine term=reverse ctermfg=0 guifg=#3b4252 ctermbg=6 guibg=#88C0D0
+        "endif
+    "endfunction
+    "au InsertEnter * call InsertStatuslineColor(v:insertmode)
+    "au InsertChange * call InsertStatuslineColor(v:insertmode)
+    "" Dracula
+    ""au InsertLeave * hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+    "" Nord
+    "au InsertLeave * hi StatusLine term=reverse ctermfg=0 guifg=#3b4252 ctermbg=6 guibg=#88C0D0
 
-    hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+    " Dracula
+    "hi StatusLine term=reverse ctermfg=16 guifg=#282a36 ctermbg=141 guibg=#bd93f9
+    " Nord
+    "hi StatusLine term=reverse ctermfg=0 guifg=#3b4252 ctermbg=6 guibg=#88C0D0
 
     set statusline=
     set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
