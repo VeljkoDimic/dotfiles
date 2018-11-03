@@ -34,6 +34,12 @@
     "" Dispatch
         Plugin 'tpope/vim-dispatch'
 
+    "" ctrlp
+        Plugin 'kien/ctrlp.vim'
+
+    "" Registers
+        Plugin 'junegunn/vim-peekaboo'
+
     call vundle#end()
     filetype plugin indent on
 ""  END VUNDLE
@@ -176,9 +182,6 @@
     " Toggles highlighting of extra whitespaces at the end of lines
     nnoremap <Leader>i :call WhitespaceToggle()<CR>
 
-    " Just use :TrimWhitespace to trim all whitespce at the end of all lines
-    command! TrimWhitespace call TrimWhitespace()
-
     " Toggle number settings
     nnoremap <Leader>r :call CycleNumberSettings()<CR>
 
@@ -199,14 +202,30 @@
     " More sensible Y in normal mode to act more like C and D
     nnoremap Y y$
 
+    " bind K to grep word under cursor
+    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 "" END MAPPING
+
+
+"" COMMANDS
+
+    " Just use :TrimWhitespace to trim all whitespce at the end of all lines
+    command! TrimWhitespace call TrimWhitespace()
+
+    " Coworker mode is some settings that I don't like, but that make it
+    " easier to collaborate with coworkers using my computer
+    command! CoworkerMode call CoworkerMode(1)
+    command! CoworkerModeOff call CoworkerMode(0)
+
+"" END COMMANDS
 
 
 "" ABBREVIATIONS
 
     " cout and endl with std
-    iabbrev cout std::cout <<
-    iabbrev endl std::endl;
+    " iabbrev cout std::cout <<
+    " iabbrev endl std::endl;
 
 "" END ABBREVIATIONS
 
@@ -221,6 +240,7 @@
 
 "" END MAKE
 
+
 "" LINTING
     " Don't run linter when typing
     "let g:ale_lint_on_text_changed = 'never'
@@ -229,6 +249,28 @@
     "autocmd VimEnter * ALEDisable
 
 "" END LINTING
+
+
+"" SILVER SEARCHER
+    if executable('ag')
+        " Use ag over grep
+        set grepprg=ag\ --nogroup\ --nocolor
+
+        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+        " ag is fast enough that CtrlP doesn't need to cache
+        let g:ctrlp_use_caching = 0
+    endif
+
+    " bind \ (backward slash) to grep shortcut
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+"" END SILVER SEARCHER
+
+
+"" CTRLP
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+"" END CTRLP
 
 
 "" FUNCTIONS
@@ -306,7 +348,7 @@
         if (expand("%:e") == "cpp" || expand("%:e") == "cc")
             find %:t:r.h
         else
-            find %:t:r.cc
+            find %:t:r.cpp
         endif
     endfunction
 
@@ -318,7 +360,25 @@
             set colorcolumn=80
         endif
     endfunction
+
+    " Turn coworker mode on/off
+    function! CoworkerMode(on)
+        if a:on
+            unmap <Left>
+            unmap <Right>
+            nnoremap <Up> <C-y>
+            nnoremap <Down> <C-e>
+        else
+            " resize horzontal split window
+            nnoremap <Left> :vertical resize -5<cr>
+            nnoremap <Right> :vertical resize +5<cr>
+            " resize horizontal split window
+            nnoremap <Up> :resize -5<cr>
+            nnoremap <Down> :resize +5<cr>
+        endif
+    endfunction
 "" END FUNCTIONS
+
 
 "" STATUSLINE
     let currentmode={
