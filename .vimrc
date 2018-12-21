@@ -9,6 +9,7 @@
 
     "" Languages
         Plugin 'sheerun/vim-polyglot'
+        "Plugin 'fatih/vim-go'
 
     "" Linting
         "Plugin 'w0rp/ale'
@@ -140,6 +141,10 @@
     "   public:
     "     a = a + 1;
     set cinoptions=g2h2
+
+    " Remove included files from autocomplete
+    setglobal complete-=i
+
 "" END VIM
 
 
@@ -203,7 +208,7 @@
     nnoremap Y y$
 
     " bind K to grep word under cursor
-    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+    nnoremap K :Ag <C-R><C-W><CR>
 
 "" END MAPPING
 
@@ -217,6 +222,8 @@
     " easier to collaborate with coworkers using my computer
     command! CoworkerMode call CoworkerMode(1)
     command! CoworkerModeOff call CoworkerMode(0)
+
+    command! DiffSaved call s:DiffWithSaved()
 
 "" END COMMANDS
 
@@ -237,6 +244,8 @@
     autocmd FileType cpp setlocal makeprg=g++\ --std=c++14\ %
     autocmd FileType tex setlocal makeprg=pdflatex\ %
     autocmd FileType python setlocal makeprg=python\ %
+    autocmd FileType go setlocal makeprg=go\ run\ %
+    autocmd FileType openscad setlocal makeprg=openscad\ -o\ %:r.stl\ %
 
 "" END MAKE
 
@@ -263,7 +272,6 @@
         let g:ctrlp_use_caching = 0
     endif
 
-    " bind \ (backward slash) to grep shortcut
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 "" END SILVER SEARCHER
 
@@ -377,7 +385,19 @@
             nnoremap <Down> :resize +5<cr>
         endif
     endfunction
+
+    " Diff current buffer with the saved file
+    " https://stackoverflow.com/a/749320
+    function! s:DiffWithSaved()
+        let filetype=&ft
+        diffthis
+        vnew | r # | normal! 1Gdd
+        diffthis
+        exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+    endfunction
+
 "" END FUNCTIONS
+
 
 
 "" STATUSLINE
