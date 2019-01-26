@@ -38,9 +38,6 @@
     "" ctrlp
         Plugin 'kien/ctrlp.vim'
 
-    "" Registers
-        Plugin 'junegunn/vim-peekaboo'
-
     call vundle#end()
     filetype plugin indent on
 ""  END VUNDLE
@@ -246,6 +243,8 @@
     autocmd FileType python setlocal makeprg=python\ %
     autocmd FileType go setlocal makeprg=go\ run\ %
     autocmd FileType openscad setlocal makeprg=openscad\ -o\ %:r.stl\ %
+    autocmd FileType java setlocal makeprg=gradle\ run
+    autocmd FileType c setlocal makeprg=gcc\ -std=c99\ %
 
 "" END MAKE
 
