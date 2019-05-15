@@ -8,8 +8,8 @@
     Plugin 'VundleVim/Vundle.vim'
 
     "" Languages
-        Plugin 'sheerun/vim-polyglot'
-        "Plugin 'fatih/vim-go'
+        "Plugin 'sheerun/vim-polyglot'
+        Plugin 'fatih/vim-go'
 
     "" Linting
         "Plugin 'w0rp/ale'
@@ -60,6 +60,7 @@
     autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType eruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+    autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
 
     " 4 spaces on tab
     set tabstop=8
@@ -207,6 +208,18 @@
     " bind K to grep word under cursor
     nnoremap K :Ag <C-R><C-W><CR>
 
+    function GoMappings()
+        nnoremap <Leader>db :GoDebugBreakpoint<CR>
+        nnoremap <Leader>dc :GoDebugContinue<CR>
+        nnoremap <Leader>dn :GoDebugNext<CR>
+        nnoremap <Leader>ds :GoDebugStep<CR>
+        nnoremap <Leader>do :GoDebugStepOut<CR>
+
+        " Probably should put this in COMMANDS but oh well
+        cnoreabbrev dstart GoDebugStart 
+        cnoreabbrev dstop GoDebugStop
+    endfunction
+
 "" END MAPPING
 
 
@@ -239,6 +252,7 @@
 
     "autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
     autocmd FileType cpp setlocal makeprg=g++\ --std=c++14\ %
+    "autocmd FileType cpp setlocal makeprg=make\ all
     autocmd FileType tex setlocal makeprg=pdflatex\ %
     autocmd FileType python setlocal makeprg=python\ %
     autocmd FileType go setlocal makeprg=go\ run\ %
@@ -278,6 +292,15 @@
 "" CTRLP
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 "" END CTRLP
+
+"" GO
+    if exists('g:loaded_polyglot')
+        let g:polyglot_disabled = ['go']
+    endif
+
+    autocmd Filetype go call GoMappings()
+
+"" END GO
 
 
 "" FUNCTIONS
