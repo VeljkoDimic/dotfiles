@@ -48,6 +48,10 @@
     " Theme
     set background=dark
     color nord
+    augroup nord-overrides
+        autocmd!
+        autocmd ColorScheme nord highlight Comment ctermfg=14
+    augroup END
 
     " Always display status bar
     set laststatus=2
