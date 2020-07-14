@@ -10,6 +10,8 @@
     "" Languages
         "Plugin 'sheerun/vim-polyglot'
         Plugin 'fatih/vim-go'
+        Plugin 'junegunn/goyo.vim'
+        Plugin 'junegunn/limelight.vim'
 
     "" Linting
         "Plugin 'w0rp/ale'
@@ -17,6 +19,7 @@
     "" Visual
         Plugin 'dracula/vim'
         Plugin 'arcticicestudio/nord-vim'
+        Plugin 'https://github.com/morhetz/gruvbox'
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
@@ -47,11 +50,11 @@
 
     " Theme
     set background=dark
-    color nord
-    augroup nord-overrides
-        autocmd!
-        autocmd ColorScheme nord highlight Comment ctermfg=14
-    augroup END
+    color gruvbox
+    "augroup nord-overrides
+        "autocmd!
+        "autocmd ColorScheme nord highlight Comment ctermfg=14
+    "augroup END
 
     " Always display status bar
     set laststatus=2
@@ -64,7 +67,7 @@
     autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType eruby setlocal shiftwidth=2 tabstop=2 expandtab
     autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
-    autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
+    autocmd Filetype go setlocal noexpandtab tabstop=2 shiftwidth=2
 
     " 4 spaces on tab
     set tabstop=8
@@ -256,7 +259,6 @@
 
     "autocmd FileType cpp setlocal makeprg=make\ -C\ ../build
     autocmd FileType cpp setlocal makeprg=g++\ --std=c++14\ %
-    "autocmd FileType cpp setlocal makeprg=make\ all
     autocmd FileType tex setlocal makeprg=pdflatex\ %
     autocmd FileType python setlocal makeprg=python\ %
     autocmd FileType go setlocal makeprg=go\ run\ %
@@ -305,6 +307,20 @@
     autocmd Filetype go call GoMappings()
 
 "" END GO
+
+
+"" WRITING
+    autocmd! User GoyoEnter Limelight
+    autocmd! User GoyoLeave Limelight!
+
+    " Color name (:help cterm-colors) or ANSI code
+    let g:limelight_conceal_ctermfg = 'gray'
+    let g:limelight_conceal_ctermfg = 240
+    
+    " Color name (:help gui-colors) or RGB color
+    let g:limelight_conceal_guifg = 'DarkGray'
+    let g:limelight_conceal_guifg = '#777777'
+"" END WRITING
 
 
 "" FUNCTIONS
