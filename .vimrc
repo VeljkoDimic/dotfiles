@@ -23,8 +23,8 @@
         Plugin 'Yggdroot/indentLine'    " Only if 'conceal' is compile with vim
 
     "" Git
-        Plugin 'tpope/vim-fugitive'
-        Plugin 'airblade/vim-gitgutter'
+        " Plugin 'tpope/vim-fugitive'
+        " Plugin 'airblade/vim-gitgutter'
 
     "" Navigation
 
@@ -326,13 +326,13 @@
 "" FUNCTIONS
 
     " Dependent on vim fugitive. Used in statusline
-    function! GitInfo()
-        let git = fugitive#head()
-        if git != ''
-            return 'ᚠ '.fugitive#head()
-        else
-            return ''
-    endfunction
+    " function! GitInfo()
+    "     let git = fugitive#head()
+    "     if git != ''
+    "         return 'ᚠ '.fugitive#head()
+    "     else
+    "         return ''
+    " endfunction
 
 
     " Highlights whitespace at the end of lines
@@ -494,7 +494,7 @@
     set statusline=
     set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
     set statusline+=%1*\ [%n]                                " buffernr
-    set statusline+=%1*\ %{GitInfo()}                        " Git Branch name
+    " set statusline+=%1*\ %{GitInfo()}                        " Git Branch name
     set statusline+=%1*\ %<%F\                               " File+path
     set statusline+=%1*%(\ [%R%M%H]%)                        " Readonly, modified, preview flags
     set statusline+=%*
